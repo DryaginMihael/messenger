@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+// ChatApp.js
+import React, { useState } from 'react';
+import MessageList from './MessageList';
+import MessageInput from './MessageInput';
+import './App.css'
 
-function App() {
+function ChatApp() {
+  const [messages, setMessages] = useState([]);
+
+  // Функция для отправки сообщения
+  const sendMessage = (text) => {
+    const newMessage = {
+      text,
+      sender: 'me', // Имя отправителя или идентификатор пользователя
+    };
+
+    setMessages([...messages, newMessage]);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="chat-app">
+      {/* <h1>SunsetChat</h1> */}
+      <MessageList messages={messages} />
+      <MessageInput onSendMessage={sendMessage} />
     </div>
   );
 }
 
-export default App;
+export default ChatApp;
