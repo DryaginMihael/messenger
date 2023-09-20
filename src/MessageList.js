@@ -1,11 +1,17 @@
 // MessageList.js
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Message from './Message';
 import './MessageList.css';
 
 function MessageList({ messages }) {
+  const listEl = useRef(null);
+
+  useEffect(() => {
+    listEl.current.scrollTop = listEl.current.scrollHeight;
+  }, [messages?.length]);
+
   return (
-    <ul className="message-list">
+    <ul ref={listEl} className="message-list">
       {messages.map((message, index) => (
         <Message key={index} message={message} />
       ))}

@@ -20,15 +20,19 @@
   
   .send-button {
     margin-left: 10px;
-    background-color: #007bff;
+    background-color: #007bff !important;
     color: #fff;
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
     cursor: pointer;
   }
+
+  .send-button_disabled {
+    background-color: #ccc !important;
+  }
   
-  .send-button:hover {
+  .send-button:not(.send-button_disabled):hover {
     background-color: #0056b3;
   }
   

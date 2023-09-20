@@ -24,7 +24,7 @@ function MessageInput({ onSendMessage }) {
         value={text}
         onChange={handleChange}
       />
-      <button type="submit" className="send-button">
+      <button type="submit" className={`send-button ${!text?.length ? 'send-button_disabled' : ''}`}>
         Отправить
       </button>
     </form>
