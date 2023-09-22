@@ -1,30 +1,27 @@
 // ChatApp.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-// import dotenv from 'dotenv';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
 import { getUserId } from './helpers/userId';
-import './App.css'
+import './App.css';
 
 const Axios = axios.create({
-  baseURL: 'https://chattogether.site/' || process.env.REACT_APP_API_URL,
+  baseURL: process.env.REACT_APP_API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// const socket = new WebSocket('ws://34.110.139.196:8081/');
+const socket = new WebSocket(process.env.REACT_APP_API_WS_URL);
 
-// socket.addEventListener('open', (event) => {
-//   console.log('Соединение установлено');
-// });
+socket.addEventListener('open', (event) => {
+  console.log('Соединение установлено');
+});
 
-// socket.addEventListener('close', () => {
-//   console.log('Соединение закрыто');
-// });
-
-// dotenv.config(); // Загрузить переменные окружения из .env файла
+socket.addEventListener('close', () => {
+  console.log('Соединение закрыто');
+});
 
 function ChatApp() {
   const [messages, setMessages] = useState([]);
@@ -49,18 +46,18 @@ function ChatApp() {
     getMessages();
   }, []);
 
-  useEffect(() => {
-    setInterval(getMessages, 10000);
-  }, []);
-
   // useEffect(() => {
-  //   socket.addEventListener('message', (event) => {    
-  //     // if (eventFromServer === 'newMessage') {
-  //     console.log(`Получено новое сообщение: ${event.data}`);
-  //     setMessages((prevMessages) => [...prevMessages, JSON.parse(event.data)]);
-  //     // }
-  //   });
+  //   setInterval(getMessages, 10000);
   // }, []);
+
+  useEffect(() => {
+    socket.addEventListener('message', (event) => {    
+      // if (eventFromServer === 'newMessage') {
+      console.log(`Получено новое сообщение: ${event.data}`);
+      setMessages((prevMessages) => [...prevMessages, JSON.parse(event.data)]);
+      // }
+    });
+  }, []);
 
   // Функция для отправки сообщения
   const sendMessage = async (text) => {
@@ -70,8 +67,8 @@ function ChatApp() {
     };
 
     try {
-      Axios.post('/api/messages', newMessage);
-      // socket.send(JSON.stringify(newMessage));
+      // Axios.post('/api/messages', newMessage);
+      socket.send(JSON.stringify(newMessage));
 
       // Обновление состояния списка сообщений
       setMessages([...messages, newMessage]);
