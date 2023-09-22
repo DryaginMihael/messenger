@@ -16,11 +16,11 @@ const Axios = axios.create({
 const socket = new WebSocket(process.env.REACT_APP_API_WS_URL);
 
 socket.addEventListener('open', (event) => {
-  console.log('Соединение установлено');
+  console.log('WebSocket connection opened');
 });
 
 socket.addEventListener('close', () => {
-  console.log('Соединение закрыто');
+  console.log('WebSocket connection closed');
 });
 
 function ChatApp() {
@@ -46,10 +46,6 @@ function ChatApp() {
     getMessages();
   }, []);
 
-  // useEffect(() => {
-  //   setInterval(getMessages, 10000);
-  // }, []);
-
   useEffect(() => {
     socket.addEventListener('message', (event) => {    
       // if (eventFromServer === 'newMessage') {
@@ -69,8 +65,6 @@ function ChatApp() {
     try {
       // Axios.post('/api/messages', newMessage);
       socket.send(JSON.stringify(newMessage));
-
-      // Обновление состояния списка сообщений
       setMessages([...messages, newMessage]);
     } catch (error) {
       console.error('Ошибка при отправке сообщения:', error);
