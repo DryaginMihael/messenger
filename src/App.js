@@ -31,6 +31,13 @@ function ChatApp() {
 
   const getMessages = async () => {
     try {
+      // const temp = {
+      //   "id": 35,
+      //   "text": "Оплачу натурой на билет до Батуми номер +790......",
+      //   "sender": "zqc2cv0lyp8lmufemvp",
+      //   "createdAt": "2023-09-22T09:55:20.829Z",
+      //   "updatedAt": "2023-09-22T09:55:20.829Z"
+      // };
       const response = await Axios.get('/api/messages');
       setMessages(response.data);
     } catch (error) {
