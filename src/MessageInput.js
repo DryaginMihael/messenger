@@ -10,6 +10,7 @@ function MessageInput({ onSendMessage }) {
   };
 
   const handleSubmit = (e) => {
+    if (!text) return;
     e.preventDefault();
     onSendMessage(text);
     setText('');

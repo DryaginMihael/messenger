@@ -8,13 +8,13 @@ import { getUserId } from './helpers/userId';
 import './App.css'
 
 const Axios = axios.create({
-  baseURL: 'http://localhost:8080/' || process.env.REACT_APP_API_URL,
+  baseURL: 'https://34.110.139.196/' || process.env.REACT_APP_API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-const socket = new WebSocket('ws://localhost:8081');
+const socket = new WebSocket('ws://34.110.139.196:8081/');
 
 socket.addEventListener('open', (event) => {
   console.log('Соединение установлено');
@@ -29,16 +29,22 @@ socket.addEventListener('close', () => {
 function ChatApp() {
   const [messages, setMessages] = useState([]);
 
+  const getMessages = async () => {
+    try {
+      const response = await Axios.get('/api/messages');
+      setMessages(response.data);
+    } catch (error) {
+      console.error('Ошибка при загрузке сообщений:', error);
+    }
+  };
+
   useEffect(() => {
-    (async () => {
-      try {
-        const response = await Axios.get('/api/messages');
-        setMessages(response.data);
-      } catch (error) {
-        console.error('Ошибка при загрузке сообщений:', error);
-      }
-    })();
+    getMessages();
   }, []);
+
+  // useEffect(() => {
+  //   setInterval(getMessages, 10000);
+  // }, []);
 
   useEffect(() => {
     socket.addEventListener('message', (event) => {    
@@ -57,17 +63,11 @@ function ChatApp() {
     };
 
     try {
-      // const response = await Axios.post('/api/messages', newMessage);
+      // Axios.post('/api/messages', newMessage);
       socket.send(JSON.stringify(newMessage));
 
       // Обновление состояния списка сообщений
       setMessages([...messages, newMessage]);
-      
-      // Обновление состояния списка сообщений
-      // this.setState((prevState) => ({
-      //   messages: [...prevState.messages, response.data],
-      //   messageText: '', // Сброс введенного текста сообщения
-      // }));
     } catch (error) {
       console.error('Ошибка при отправке сообщения:', error);
     }
