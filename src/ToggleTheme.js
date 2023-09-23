@@ -6,13 +6,16 @@ const ToggleTheme = () => {
   const [isDarkTheme, setDarkTheme] = useState(getTheme() === 'dark');
 
   const toggleTheme = () => {
-    setDarkTheme(!isDarkTheme);
-    setTheme(isDarkTheme ? 'dark' : 'light');
+    setDarkTheme(prev => {
+        const isDark = !prev;
+        setTheme(isDark ? 'dark' : 'light');
+        return isDark;
+    });
   };
 
   return (
     <div className={'theme-block'}>
-        <h1>Темный тема:</h1>
+        <h1>Темная тема:</h1>
         <div className={`theme-toggle ${isDarkTheme ? 'dark' : 'light'}`}>
             <label>
                 <input type="checkbox" onChange={toggleTheme} checked={isDarkTheme} />

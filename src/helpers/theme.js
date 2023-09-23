@@ -5,6 +5,12 @@ const darkTheme = {
 }
 
 const lightTheme = {
+    '--bg-color': '#f53',
+    '--bg-color-secondary': '#d53',
+    '--text-color': '#fff',
+}
+
+const lightTheme2 = {
     '--bg-color': '#007bff',
     '--bg-color-secondary': '#0371e5',
     '--text-color': '#fff',
