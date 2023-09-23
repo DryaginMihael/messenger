@@ -1,30 +1,35 @@
 // ChatApp.js
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import axios from 'axios';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
 import { getUserId } from './helpers/userId';
-import './App.css';
+import './ChatApp.css';
+import { notify } from './helpers/notification';
 
 const Axios = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  baseURL: process.env.REACT_APP_API_URL
 });
 
-const socket = new WebSocket(process.env.REACT_APP_API_WS_URL);
-
-socket.addEventListener('open', (event) => {
-  console.log('WebSocket connection opened');
-});
-
-socket.addEventListener('close', () => {
-  console.log('WebSocket connection closed');
-});
+const eventSource = new EventSource(process.env.REACT_APP_API_URL + 'api/connect');
 
 function ChatApp() {
   const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    getMessages();
+    subscribe();
+  }, []);
+
+  const subscribe = async () => {
+    eventSource.onmessage = (event) => {
+        const newMessage = JSON.parse(event.data);
+        setMessages(prev => [...prev, newMessage]);
+        if (newMessage.sender !== getUserId()) {
+          notify(newMessage.text);
+        }
+    }
+  };
 
   const getMessages = async () => {
     try {
@@ -42,18 +47,24 @@ function ChatApp() {
     }
   };
 
-  useEffect(() => {
-    getMessages();
-  }, []);
+  // useEffect(() => {
+  //   const socket = new WebSocket(process.env.REACT_APP_API_WS_URL);
 
-  useEffect(() => {
-    socket.addEventListener('message', (event) => {    
-      // if (eventFromServer === 'newMessage') {
-      console.log(`Получено новое сообщение: ${event.data}`);
-      setMessages((prevMessages) => [...prevMessages, JSON.parse(event.data)]);
-      // }
-    });
-  }, []);
+  //   socket.addEventListener('open', (event) => {
+  //     console.log('WebSocket connection opened');
+  //   });
+
+  //   socket.addEventListener('close', () => {
+  //     console.log('WebSocket connection closed');
+  //   });
+
+  //   socket.addEventListener('message', (event) => {    
+  //     // if (eventFromServer === 'newMessage') {
+  //     console.log(`Получено новое сообщение: ${event.data}`);
+  //     setMessages((prevMessages) => [...prevMessages, JSON.parse(event.data)]);
+  //     // }
+  //   });
+  // }, []);
 
   // Функция для отправки сообщения
   const sendMessage = async (text) => {
@@ -63,9 +74,9 @@ function ChatApp() {
     };
 
     try {
-      // Axios.post('/api/messages', newMessage);
-      socket.send(JSON.stringify(newMessage));
-      setMessages([...messages, newMessage]);
+      Axios.post('/api/messages', newMessage);
+      // socket.send(JSON.stringify(newMessage));
+      // setMessages([...messages, newMessage]);
     } catch (error) {
       console.error('Ошибка при отправке сообщения:', error);
     }
@@ -80,4 +91,4 @@ function ChatApp() {
   );
 }
 
-export default ChatApp;
+export default memo(ChatApp);

@@ -11,19 +11,21 @@ function MessageList({ messages }) {
   }, [messages?.length]);
 
   return (
-    <ul ref={listEl} className="message-list">
-      {messages.map((message, index) => (
-        <Message key={index} message={message} />
-      ))}
-      {/* {
-        messages.length === 0 &&
-        <div className="message-list__empty h-full align-middle flex align-center">
-            <span>
-                Зловещая тишина...
-            </span>
-        </div>
-      } */}
-    </ul>
+    <div className="message-list-container">
+      <ul ref={listEl} className="message-list">
+        {messages.map((message, index) => (
+          <Message key={index} message={message} />
+        ))}
+        {/* {
+          messages.length === 0 &&
+          <div className="message-list__empty h-full align-middle flex align-center">
+              <span>
+                  Зловещая тишина...
+              </span>
+          </div>
+        } */}
+      </ul>
+    </div> 
   );
 }
 
