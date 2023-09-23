@@ -3,6 +3,8 @@ import React, { useEffect, useState, memo } from 'react';
 import axios from 'axios';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
+import Header from './Header';
+import Sidebar from './Sidebar';
 import { getUserId } from './helpers/userId';
 import './ChatApp.css';
 import { notify } from './helpers/notification';
@@ -15,6 +17,7 @@ const eventSource = new EventSource(process.env.REACT_APP_API_URL + 'api/connect
 
 function ChatApp() {
   const [messages, setMessages] = useState([]);
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     getMessages();
@@ -82,9 +85,14 @@ function ChatApp() {
     }
   };
 
+  const toggleSidebar = () => {
+    setSidebarOpen(!isSidebarOpen);
+  };
+
   return (
-    <div className="chat-app">
-      {/* <h1>SunsetChat</h1> */}
+    <div className={`chat-app ${isSidebarOpen ? 'chat-app_disabled' : ''}`}>
+      <Header toggleSidebar={toggleSidebar}/>
+      <Sidebar isOpen={isSidebarOpen} />
       <MessageList messages={messages} />
       <MessageInput onSendMessage={sendMessage} />
     </div>

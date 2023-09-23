@@ -1,0 +1,33 @@
+.sidebar {
+  width: 0;
+  height: calc(100% - 59px);
+  position: absolute;
+  z-index: 10;
+  top: 59px;
+  left: 0;
+  background-color: #0371e5;
+  /* box-shadow: 100px 0 0px rgba(0, 0, 0, 0.6); */
+  overflow-x: hidden;
+  transition: 0.3s;
+}
+
+.sidebar.open {
+  width: 500px;
+  max-width: 100%;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+nav li {
+  padding: 1rem;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+nav li:hover {
+  background-color: #007bff;
+}
