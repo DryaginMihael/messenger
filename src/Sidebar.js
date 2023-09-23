@@ -1,5 +1,6 @@
 import React from 'react';
 import './Sidebar.css';
+import ToggleTheme from './ToggleTheme';
 
 const Sidebar = ({ isOpen }) => {
   return (
@@ -11,6 +12,7 @@ const Sidebar = ({ isOpen }) => {
           <li>Чат 3</li>
         </ul>
       </nav>
+      <ToggleTheme />
     </div>
   );
 };

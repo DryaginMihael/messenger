@@ -5,10 +5,13 @@
   z-index: 10;
   top: 59px;
   left: 0;
-  background-color: #0371e5;
+  background-color: var(--bg-color-secondary);
   /* box-shadow: 100px 0 0px rgba(0, 0, 0, 0.6); */
   overflow-x: hidden;
   transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .sidebar.open {
@@ -29,5 +32,5 @@ nav li {
 }
 
 nav li:hover {
-  background-color: #007bff;
+  background-color: var(--bg-color);
 }

@@ -8,6 +8,9 @@ import Sidebar from './Sidebar';
 import { getUserId } from './helpers/userId';
 import './ChatApp.css';
 import { notify } from './helpers/notification';
+import { initTheme } from './helpers/theme';
+
+initTheme();
 
 const Axios = axios.create({
   baseURL: process.env.REACT_APP_API_URL

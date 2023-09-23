@@ -9,7 +9,7 @@
   }
   
   .sent-message {
-    background-color: #007bff;
+    background-color: var(--bg-color);
     border-top-right-radius: 0;
     color: #fff;
     align-self: flex-end;
@@ -26,7 +26,7 @@
     height: 0;
     border-top: 0 solid transparent;
     border-bottom: 10px solid transparent;
-    border-left: 10px solid #007bff;
+    border-left: 10px solid var(--bg-color);
   }
   
   .received-message {

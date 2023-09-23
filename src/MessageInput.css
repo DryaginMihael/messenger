@@ -15,12 +15,12 @@
   }
   
   .message-input:focus {
-    border-color: #007bff;
+    border-color: var(--bg-color)
   }
   
   .send-button {
     margin-left: 10px;
-    background-color: #007bff !important;
+    background-color: var(--bg-color) !important;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -33,6 +33,6 @@
   }
   
   .send-button:not(.send-button_disabled):hover {
-    background-color: #0056b3;
+    background-color: var(--bg-color);
   }
   
