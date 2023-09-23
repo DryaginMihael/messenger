@@ -7,7 +7,7 @@ export const notify = (message) => {
               // Если разрешение дано, можно создавать уведомления
               var notification = new Notification('У вас новое сообщение', {
                 body: message,
-                icon: '../img/logo2.png'
+                icon: './logo2.png'
               });
               
               notification.onclick = function () {
