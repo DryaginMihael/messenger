@@ -56,7 +56,7 @@ export const setTheme = (theme = 'light') => {
 }
 export const setColorScheme = (colorScheme = 'dark') => {
     applyStyleConfig(colorSchemes[colorScheme]);
-    localStorage.setItem('theme', colorScheme);
+    localStorage.setItem('colorScheme', colorScheme);
 }
 
 export const getTheme = () => localStorage.getItem('theme') || 'light';
