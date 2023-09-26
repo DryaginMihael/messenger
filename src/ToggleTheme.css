@@ -4,7 +4,6 @@
     display: inline-block;
     width: 60px;
     height: 34px;
-
 }
 
 .theme-block {
@@ -13,7 +12,8 @@
     justify-content: flex-end;
     gap: 10px;
     color: #fff;
-    margin: 10px;
+    margin: 10px 25px 25px 10px;
+    z-index: 30;
 }
   
 .theme-toggle input {
@@ -60,4 +60,19 @@ input:checked + .slider:before {
 .theme-toggle.dark input:checked + .slider {
     background-color: #444;
 }
+
+.theme-color-scheme {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.theme-color-scheme_selected {
+    border: 2px solid #fff;
+}
   
+.color-scheme-list {
+    display: flex;
+    gap: 10px;
+}

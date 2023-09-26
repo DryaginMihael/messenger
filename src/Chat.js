@@ -6,11 +6,12 @@ import MessageInput from './MessageInput';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import { getUserId } from './helpers/userId';
-import './ChatApp.css';
+import './Chat.css';
 import { notify } from './helpers/notification';
-import { initTheme } from './helpers/theme';
+import { initTheme, initColorScheme } from './helpers/theme';
 
-initTheme();
+// initTheme();
+initColorScheme();
 
 const Axios = axios.create({
   baseURL: process.env.REACT_APP_API_URL
@@ -18,7 +19,7 @@ const Axios = axios.create({
 
 const eventSource = new EventSource(process.env.REACT_APP_API_URL + 'api/connect');
 
-function ChatApp() {
+function Chat() {
   const [messages, setMessages] = useState([]);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
@@ -30,8 +31,8 @@ function ChatApp() {
   const subscribe = async () => {
     eventSource.onmessage = (event) => {
         const newMessage = JSON.parse(event.data);
-        setMessages(prev => [...prev, newMessage]);
         if (newMessage.sender !== getUserId()) {
+          setMessages(prev => [...prev, newMessage]);
           notify(newMessage.text);
         }
     }
@@ -39,13 +40,6 @@ function ChatApp() {
 
   const getMessages = async () => {
     try {
-      // const temp = {
-      //   "id": 35,
-      //   "text": "Оплачу натурой на билет до Батуми номер +790......",
-      //   "sender": "zqc2cv0lyp8lmufemvp",
-      //   "createdAt": "2023-09-22T09:55:20.829Z",
-      //   "updatedAt": "2023-09-22T09:55:20.829Z"
-      // };
       const response = await Axios.get('/api/messages');
       setMessages(response.data);
     } catch (error) {
@@ -80,9 +74,9 @@ function ChatApp() {
     };
 
     try {
-      Axios.post('/api/messages', newMessage);
+      await Axios.post('/api/messages', newMessage);
       // socket.send(JSON.stringify(newMessage));
-      // setMessages([...messages, newMessage]);
+      setMessages([...messages, newMessage]);
     } catch (error) {
       console.error('Ошибка при отправке сообщения:', error);
     }
@@ -102,4 +96,4 @@ function ChatApp() {
   );
 }
 
-export default memo(ChatApp);
+export default memo(Chat);

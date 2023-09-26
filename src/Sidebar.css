@@ -14,6 +14,14 @@
   justify-content: space-between;
 }
 
+.sidebar::after {
+  content: '';
+  z-index: 20;
+  inset: 0;
+  position: absolute;
+  background-color: rgba(0, 0, 0, .05);
+}
+
 .sidebar.open {
   width: 500px;
   max-width: 100%;
@@ -22,6 +30,8 @@
 nav ul {
   list-style: none;
   padding: 0;
+  z-index: 30;
+  position: relative;
 }
 
 nav li {
@@ -29,6 +39,7 @@ nav li {
   color: white;
   cursor: pointer;
   transition: 0.2s;
+  display: flex;
 }
 
 nav li:hover {
