@@ -37,12 +37,6 @@ const lightTheme = {
     '--text-color': '#fff',
 }
 
-const lightTheme2 = {
-    '--bg-color': '#007bff',
-    '--bg-color-secondary': '#0371e5',
-    '--text-color': '#fff',
-}
-
 const applyStyleConfig = (cfg) => {
     const root = document.documentElement;
     Object.keys(cfg).forEach(key => {

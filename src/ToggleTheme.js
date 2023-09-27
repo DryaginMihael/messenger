@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import './ToggleTheme.css';
 import {
-  setTheme, getTheme, colorSchemes, getColorScheme, setColorScheme as setAppColorScheme
+  colorSchemes, getColorScheme, setColorScheme as setAppColorScheme
 } from './helpers/theme';
 
 const ToggleTheme = () => {
   // const [isDarkTheme, setDarkTheme] = useState(getTheme() === 'dark');
-  const [colorScheme, setColorScheme] = useState('dark' || getColorScheme());
+  const [colorScheme, setColorScheme] = useState(getColorScheme());
 
   // const toggleTheme = () => {
   //   setDarkTheme(prev => {

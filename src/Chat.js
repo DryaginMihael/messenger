@@ -1,6 +1,5 @@
 // ChatApp.js
 import React, { useEffect, useState, memo } from 'react';
-import axios from 'axios';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
 import Header from './Header';
@@ -8,14 +7,10 @@ import Sidebar from './Sidebar';
 import { getUserId } from './helpers/userId';
 import './Chat.css';
 import { notify } from './helpers/notification';
-import { initTheme, initColorScheme } from './helpers/theme';
+import { initColorScheme } from './helpers/theme';
+import { Axios } from './helpers/api';
 
-// initTheme();
 initColorScheme();
-
-const Axios = axios.create({
-  baseURL: process.env.REACT_APP_API_URL
-});
 
 const eventSource = new EventSource(process.env.REACT_APP_API_URL + 'api/connect');
 

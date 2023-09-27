@@ -1,0 +1,13 @@
+.input-field {
+    width: calc(100% - 200px);
+    margin: 5px;
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+.input-field:focus {
+    border-color: var(--bg-color)
+}

@@ -1,0 +1,59 @@
+.app {
+    max-width: 600px;
+    height: 100%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    /* background-color: rgba(255, 255, 255, .7); */
+
+  }
+
+.auth-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
+
+.auth-container_reg {
+    margin-top: 56px;
+    cursor: pointer;
+}
+
+.auth-buttons {
+    width: calc(100% - 200px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+}
+
+.auth-button {
+    margin: 5px 0;
+    color: #fff;
+    border: 2px solid var(--bg-color);
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.login-button {
+    background-color: var(--bg-color) !important;
+}
+
+.reg-suggest {
+    cursor: pointer;
+}
+
+.login-button_disabled {
+    background-color: #ccc !important;
+}
+
+.login-button:not(.login-button_disabled):hover {
+    background-color: var(--bg-color);
+}
+
+.error-message {
+    color: red;
+}

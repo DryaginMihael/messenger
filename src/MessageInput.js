@@ -1,9 +1,10 @@
 // MessageInput.js
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './MessageInput.css';
 
 function MessageInput({ onSendMessage }) {
   const [text, setText] = useState('');
+  const inputRef = useRef(null);
 
   const handleChange = (e) => {
     setText(e.target.value);
@@ -14,11 +15,13 @@ function MessageInput({ onSendMessage }) {
     e.preventDefault();
     onSendMessage(text);
     setText('');
+    inputRef.current.focus();
   };
 
   return (
     <form className="message-input-container" onSubmit={handleSubmit}>
       <input
+        ref={inputRef}      
         className="message-input"
         type="text"
         placeholder="Введите сообщение..."

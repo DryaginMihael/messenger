@@ -62,8 +62,8 @@ input:checked + .slider:before {
 }
 
 .theme-color-scheme {
-    height: 30px;
-    width: 30px;
+    height: 40px;
+    width: 40px;
     border-radius: 50%;
     cursor: pointer;
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Chat from './Chat';
+import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 // window.addEventListener('load', async (event) => {
@@ -18,7 +18,7 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Chat />
+    <App />
   </React.StrictMode>
 );
 
