@@ -90,6 +90,7 @@ function Chat({logout}) {
   // Api пока нет
   const chooseChat = useCallback(async (chatId) => {
     try {
+      setSidebarOpen(false);
       setCurrentUser(users?.find(user => user.username === chatId));
       const response = await Axios.get('/api/chat/' + chatId);
       setMessages(response.data);

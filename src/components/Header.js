@@ -14,8 +14,9 @@ const Header = ({ toggleSidebar, logout, currentUser }) => {
         <button
           className="logout-button"
           onClick={logout}
-        >
-          <i className="fas fa-sign-out-alt"></i>
+        > 
+          Выйти
+          <i className="fas fa-sign-out-alt pl-2"></i>
         </button>
     </header>
   );

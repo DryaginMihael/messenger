@@ -35,3 +35,10 @@
     vertical-align: middle;
     text-align: center;
 }
+
+.chat-typing-text {
+    /* font-size: 12px; */
+    opacity: 0.8;
+    vertical-align: bottom;
+    line-height: 100%;
+}
