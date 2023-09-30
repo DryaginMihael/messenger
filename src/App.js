@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Axios } from './helpers/api';
 import Chat from './Chat';
 import Input from './Input';
@@ -8,9 +8,13 @@ function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [repeatedPassword, setRepeatedPassword] = useState('');
-  const [token, setToken] = useState('');
+  const [isAuth, setIsAuth] = useState(!!localStorage.getItem('token'));
   const [isReg, setIsReg] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
+
+  useEffect(() => {
+    checkAuth();
+  }, [])
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -29,18 +33,50 @@ function App() {
             setErrorMessage('');
           }
         }
-        const response = await Axios.post(`/api/${isReg ? 'reg' : 'login'}`, { username, password })
-        setToken(response.data.token);
+        const response = await Axios.post(`/api/${isReg ? 'reg' : 'login'}`, { username, password });
+        const token = response.data.token;
+        if (token) {
+          localStorage.setItem('token', response.data.token);
+          setIsAuth(true);
+        }
     } catch (error) {
         setErrorMessage(error.response?.data?.message);
+        setIsAuth(false);
         console.error(error);
     }
   };
 
+  const checkAuth = () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      // Если токен есть в локальном хранилище, выполните запрос к серверу
+      Axios.get('/check-auth', {
+        headers: {
+          'Authorization': `Bearer ${token}}`,
+        },
+      })
+      .then((response) => {
+        // В случае успешного ответа, вы можете установить авторизацию в вашем React-приложении
+        setIsAuth(true);
+      })
+      .catch((error) => {
+        console.log('Ошибка проверки аутентификации:', error);
+      })
+      .finally(() => {
+        setIsAuth(true); // TODO: не правильно
+      })
+    }
+  }
+
+  const logout = () => {
+    setIsAuth(false);
+    localStorage.setItem('token', '');
+  }
+
   return (
     <div className="app">
-      {token ? (
-          <Chat />
+      {isAuth ? (
+          <Chat logout={logout}/>
       ) : (
         <form className={`auth-container ${isReg ? 'auth-container_reg' : ''}`}>
           <h1 className="error-message">{errorMessage}⠀</h1>

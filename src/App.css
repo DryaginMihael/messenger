@@ -10,10 +10,12 @@
 
 .auth-container {
     flex-grow: 1;
+    max-width: 400px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px;
+    padding: 20px;
 }
 
 .auth-container_reg {
@@ -22,7 +24,7 @@
 }
 
 .auth-buttons {
-    width: calc(100% - 200px);
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -32,7 +34,6 @@
 .auth-button {
     margin: 5px 0;
     color: #fff;
-    border: 2px solid var(--bg-color);
     border-radius: 5px;
     padding: 10px 20px;
     cursor: pointer;

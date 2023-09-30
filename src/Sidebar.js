@@ -3,7 +3,7 @@ import './Sidebar.css';
 import ToggleTheme from './ToggleTheme';
 import { Axios } from './helpers/api';
 
-const Sidebar = ({ isOpen }) => {
+const Sidebar = ({ isOpen, chooseChat }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -22,7 +22,17 @@ const Sidebar = ({ isOpen }) => {
               <li
                 key={user.username}
                 className='sidebar-chat'
+                onClick={() => chooseChat(user.username)}
               >
+                {
+                  user.avatar ?
+                    (<img src={user.avatar} alt=''/>) :
+                    (<div className='chat-avatar-letter'>
+                      <span>
+                        {user.username[0]}
+                      </span>
+                    </div>)
+                }
                 {/* <div style={{backgroundImage: `url(${chat.avatar})`}}></div>
                 <img src={chat.avatar} alt={chat.name} /> */}
                 <span>{user.username}</span>

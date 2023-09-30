@@ -1,5 +1,5 @@
 // ChatApp.js
-import React, { useEffect, useState, memo } from 'react';
+import React, { useEffect, useState, memo, useCallback } from 'react';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
 import Header from './Header';
@@ -14,7 +14,7 @@ initColorScheme();
 
 const eventSource = new EventSource(process.env.REACT_APP_API_URL + 'api/connect');
 
-function Chat() {
+function Chat({logout}) {
   const [messages, setMessages] = useState([]);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
@@ -69,13 +69,23 @@ function Chat() {
     };
 
     try {
-      await Axios.post('/api/messages', newMessage);
+      const response = await Axios.post('/api/messages', newMessage);
       // socket.send(JSON.stringify(newMessage));
-      setMessages([...messages, newMessage]);
+      setMessages([...messages, response.data]);
     } catch (error) {
       console.error('Ошибка при отправке сообщения:', error);
     }
   };
+
+  // Api пока нет
+  const chooseChat = useCallback(async (chatId) => {
+    try {
+      const response = await Axios.get('/api/chat/' + chatId);
+      setMessages(response.data);
+    } catch (e) {
+      console.error('Ошибка при получении чата: ', e);
+    }
+  }, []);
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -83,8 +93,8 @@ function Chat() {
 
   return (
     <div className={`chat-app ${isSidebarOpen ? 'chat-app_disabled' : ''}`}>
-      <Header toggleSidebar={toggleSidebar}/>
-      <Sidebar isOpen={isSidebarOpen} />
+      <Header toggleSidebar={toggleSidebar} logout={logout}/>
+      <Sidebar isOpen={isSidebarOpen} chooseChat={chooseChat} />
       <MessageList messages={messages} />
       <MessageInput onSendMessage={sendMessage} />
     </div>

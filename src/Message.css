@@ -59,10 +59,12 @@
 .message-time {
   cursor: pointer;
   font-size: 10px;
-  opacity: 0;
+  opacity: .5;
   transition: all .2s;
 }
 
+
+/* FIXME сейчас время показывается всегда, так что возможно стоит удалить */
 .message:hover .message-time {
   opacity: .5;
 }

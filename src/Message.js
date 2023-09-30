@@ -7,7 +7,9 @@ const getDate = (time) => {
   const date =new Date(time);
   let hours = date.getHours();
   hours = ('0' + hours).slice(-2);
-  return hours + ':' + date.getMinutes();
+  let mins = date.getMinutes();
+  mins = ('0' + mins).slice(-2);
+  return hours + ':' + mins;
 } 
 
 function Message({ message }) {

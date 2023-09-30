@@ -5,6 +5,7 @@
     padding: 1rem;
     background-color: var(--bg-color);
     color: white;
+    border-bottom: 1px solid #eee;
 }
 
 .burger {
