@@ -1,14 +1,15 @@
 // ChatApp.js
 import React, { useEffect, useState, memo, useCallback } from 'react';
 import MessageList from './MessageList';
-import MessageInput from './MessageInput';
-import Header from './Header';
+import MessageInput from './components/MessageInput';
+import Header from './components/Header';
 import Sidebar from './Sidebar';
 import { getUserId } from './helpers/userId';
 import './Chat.css';
 import { notify } from './helpers/notification';
 import { initColorScheme } from './helpers/theme';
 import { Axios } from './helpers/api';
+import ChatsList from './components/ChatsList';
 
 initColorScheme();
 
@@ -16,12 +17,21 @@ const eventSource = new EventSource(process.env.REACT_APP_API_URL + 'api/connect
 
 function Chat({logout}) {
   const [messages, setMessages] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     getMessages();
     subscribe();
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      const response = await Axios.get('/api/users');
+      setUsers(response.data);
+    })()
+}, [])
 
   const subscribe = async () => {
     eventSource.onmessage = (event) => {
@@ -80,12 +90,13 @@ function Chat({logout}) {
   // Api пока нет
   const chooseChat = useCallback(async (chatId) => {
     try {
+      setCurrentUser(users?.find(user => user.username === chatId));
       const response = await Axios.get('/api/chat/' + chatId);
       setMessages(response.data);
     } catch (e) {
       console.error('Ошибка при получении чата: ', e);
     }
-  }, []);
+  }, [users]);
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -93,10 +104,28 @@ function Chat({logout}) {
 
   return (
     <div className={`chat-app ${isSidebarOpen ? 'chat-app_disabled' : ''}`}>
-      <Header toggleSidebar={toggleSidebar} logout={logout}/>
-      <Sidebar isOpen={isSidebarOpen} chooseChat={chooseChat} />
-      <MessageList messages={messages} />
-      <MessageInput onSendMessage={sendMessage} />
+      <Header
+        toggleSidebar={toggleSidebar}
+        currentUser={currentUser}
+        logout={logout}
+      />
+      <Sidebar
+        isOpen={isSidebarOpen}
+        users={users}
+        currentUser={currentUser}
+        chooseChat={chooseChat}
+      />
+      {
+        currentUser ? (<>
+          <MessageList messages={messages} />
+          <MessageInput onSendMessage={sendMessage} />
+        </>) :
+        (<ChatsList
+          users={users}
+          currentUser={currentUser}
+          chooseChat={chooseChat}
+        />)
+      }
     </div>
   );
 }

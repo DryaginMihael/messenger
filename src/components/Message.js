@@ -1,7 +1,7 @@
 // Message.js
 import React from 'react';
 import './Message.css';
-import { getUserId } from './helpers/userId';
+import { getUserId } from '../helpers/userId';
 
 const getDate = (time) => {
   const date =new Date(time);

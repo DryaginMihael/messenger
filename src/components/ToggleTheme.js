@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './ToggleTheme.css';
 import {
   colorSchemes, getColorScheme, setColorScheme as setAppColorScheme
-} from './helpers/theme';
+} from '../helpers/theme';
 
 const ToggleTheme = () => {
   // const [isDarkTheme, setDarkTheme] = useState(getTheme() === 'dark');

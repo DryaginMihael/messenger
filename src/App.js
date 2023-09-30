@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Axios } from './helpers/api';
 import Chat from './Chat';
-import Input from './Input';
+import Input from './components/Input';
 import './App.css';
 
 function App() {

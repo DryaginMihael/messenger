@@ -1,0 +1,37 @@
+.chat-item:hover {
+    background-color: var(--bg-color);
+}
+
+.chat-item_selected {
+    background-color: var(--bg-color);
+}
+
+.chat-item {
+    padding: 5px;
+    margin: 0 5px;
+    display: flex;
+    flex-grow: 1;
+    gap: 10px;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+.chat-avatar-letter {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    text-transform: uppercase;
+    background-color: rgba(0, 0, 0, .1);
+    display: table;
+    border: 1px solid #fff;
+}
+
+.chat-avatar-letter span {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
