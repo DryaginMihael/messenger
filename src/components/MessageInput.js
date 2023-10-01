@@ -11,8 +11,8 @@ function MessageInput({ onSendMessage }) {
   };
 
   const handleSubmit = (e) => {
+    e.preventDefault(); // чтоб не перезагружалась страница
     if (!text) return;
-    e.preventDefault();
     onSendMessage(text);
     setText('');
     inputRef.current.focus();
