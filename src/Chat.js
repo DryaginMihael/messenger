@@ -36,7 +36,7 @@ function Chat({logout}) {
   const subscribe = async () => {
     eventSource.onmessage = (event) => {
         const newMessage = JSON.parse(event.data);
-        if (newMessage.sender !== getUserId()) {
+        if (newMessage.user_id !== getUserId()) {
           setMessages(prev => [...prev, newMessage]);
           notify(newMessage.text);
         }
@@ -45,8 +45,15 @@ function Chat({logout}) {
 
   const getMessages = async () => {
     try {
-      const response = await Axios.get('/api/messages');
-      setMessages(response.data);
+      const userId = getUserId();
+      const recipientId = currentUser?.id;
+      if (userId && recipientId) {
+        const response = await Axios.get('/api/messages', {
+          userId,
+          recipientId: currentUser?.id,
+        });
+        setMessages(response.data);
+      }
     } catch (error) {
       console.error('Ошибка при загрузке сообщений:', error);
     }
@@ -75,7 +82,8 @@ function Chat({logout}) {
   const sendMessage = async (text) => {
     const newMessage = {
       text,
-      sender: getUserId(), // Имя отправителя или идентификатор пользователя
+      userId: getUserId(), // Id отправителя
+      recipientId: currentUser.id // Id получателя
     };
 
     try {
@@ -91,8 +99,14 @@ function Chat({logout}) {
   const chooseChat = useCallback(async (chatId) => {
     try {
       setSidebarOpen(false);
-      setCurrentUser(users?.find(user => user.username === chatId));
-      const response = await Axios.get('/api/chat/' + chatId);
+      const newCurrentUser = users?.find(user => user.username === chatId);
+      setCurrentUser(newCurrentUser);
+      const response = await Axios.get('/api/messages', {
+        params: {
+          userId: getUserId(), // Id отправителя
+          recipientId: newCurrentUser.id 
+        }
+      });
       setMessages(response.data);
     } catch (e) {
       console.error('Ошибка при получении чата: ', e);

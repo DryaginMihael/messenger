@@ -4,14 +4,14 @@ import './ChatItem.css';
 let intervalId = null;
 let initialText = 'печатает';
 
-const ChatItem = ({ user, chooseChat, currentUser }) => {
+const ChatItem = ({ user, chooseChat, currentUser, className }) => {
     const [typingText, setTypingText] = useState('');
 
     const simulateTyping = useCallback(() => {
         intervalId = setInterval(() => {
             setTypingText(prev => {
-                if (prev.includes('...')) {
-                    return initialText;
+                if (!prev.includes(initialText) || prev.includes('...')) {
+                    return initialText
                 } else {
                     return prev + '.';
                 }
@@ -20,16 +20,16 @@ const ChatItem = ({ user, chooseChat, currentUser }) => {
     }, []);
 
     useEffect(() => {
-        if (user?.id === currentUser?.id) {
+        if (user && currentUser && user?.id === currentUser?.id) {
             simulateTyping();
         } else if (intervalId) {
             clearInterval(intervalId);
         }
-    }, [currentUser?.id, user?.id, simulateTyping]);
+    }, [user, currentUser, currentUser?.id, user?.id, simulateTyping]);
 
     return (user &&
         <li
-            className={`chat-item ${user.id === currentUser?.id ? 'chat-item_selected' : ''}`}
+            className={`${className} chat-item ${user.id === currentUser?.id ? 'chat-item_selected' : ''}`}
             onClick={() => chooseChat?.(user.username)}
         >
             {

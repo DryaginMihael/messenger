@@ -37,6 +37,8 @@ function App() {
         const token = response.data.token;
         if (token) {
           localStorage.setItem('token', response.data.token);
+          localStorage.setItem('userId', response.data.user?.id);
+          localStorage.setItem('username', response.data.user?.username);
           setIsAuth(true);
         }
     } catch (error) {

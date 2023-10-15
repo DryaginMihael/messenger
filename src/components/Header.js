@@ -9,7 +9,9 @@ const Header = ({ toggleSidebar, logout, currentUser }) => {
         <Burger toggleSidebar={toggleSidebar}/>
         {/* <h1>Chat Me</h1> */}
         <ChatItem
+          className="header-chat-item"
           user={currentUser}
+          currentUser={currentUser}
         />
         <button
           className="logout-button"

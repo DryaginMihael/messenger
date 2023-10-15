@@ -8,5 +8,5 @@ export const getUserId = () => {
         userId = generateUniqueId();
         localStorage.setItem('userId', userId);
     }
-    return userId;
+    return +userId;
 }
