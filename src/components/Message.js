@@ -13,7 +13,7 @@ const getDate = (time) => {
 } 
 
 function Message({ message }) {
-  const messageClass = message.sender === getUserId() ? 'sent-message' : 'received-message';
+  const messageClass = message.user_id === getUserId() ? 'sent-message' : 'received-message';
 
   return (
     <li className={`message ${messageClass}`}>

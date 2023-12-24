@@ -34,7 +34,6 @@
     "deploy": "gh-pages -d build",
     "clean": "gh-pages-clean"
   },
-  "homepage": "https://dryaginmihael.github.io/messenger/",
   "eslintConfig": {
     "extends": [
       "react-app",
